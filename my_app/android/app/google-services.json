@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "791680752297",
+    "project_id": "actvity-firebase",
+    "storage_bucket": "actvity-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791680752297:android:04ed408811c4740bb6e7b8",
+        "android_client_info": {
+          "package_name": "com.example.my_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "791680752297-dngsegl39s9vbtu5fnnd569bgbd64n3r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGYjpEofkYIaq9e1h318QR9eQPUa43tls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "791680752297-dngsegl39s9vbtu5fnnd569bgbd64n3r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
