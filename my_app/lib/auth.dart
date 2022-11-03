@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: [
@@ -31,24 +32,49 @@ class _fireauthstate extends State<fireauth> {
   }
 
   @override
+  void initState() {
+    getEmail();
+    super.initState();
+  }
+
+  getEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? saveE = prefs.getString('email');
+    if (saveE != null) {
+      _email.text = saveE.toString();
+    }
+  }
+
+  saveEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('email', _email.text);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text("Firebase activity"),
+            title: Text("TourG"),
             centerTitle: true,
-            backgroundColor: Color.fromARGB(255, 195, 216, 75)),
+            backgroundColor: Color.fromARGB(255, 11, 224, 135)),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(100),
+          padding: EdgeInsets.all(50),
           child: Center(
             child: Column(children: [
               Container(
                   width: 300,
-                  color: Color.fromARGB(255, 222, 237, 189),
+                  color: Color.fromARGB(255, 187, 234, 185),
                   child: Column(
                     children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.network(
+                            "https://i.postimg.cc/gkWx7Gyd/woman-girl-travel-clipart-xl.png"),
+                      ),
                       Padding(
-                          padding: EdgeInsets.all(
-                              15), //apply padding to all four sides
+                          padding: EdgeInsets.all(15),
+                          //apply padding to all four sides
+
                           child: TextFormField(
                             controller: _email,
                             onChanged: (value) {
@@ -104,6 +130,9 @@ class _fireauthstate extends State<fireauth> {
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
+                                // ElevatedButton(
+                                //     onPressed: saveEmail,
+                                //     child: Text("Save email")),
                                 ElevatedButton(
                                     onPressed: signin, child: Text("Sign In")),
                                 ElevatedButton(
@@ -150,6 +179,7 @@ class _fireauthstate extends State<fireauth> {
         email: _email.text,
         password: _password.text,
       );
+      saveEmail();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');

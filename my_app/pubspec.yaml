@@ -38,11 +38,15 @@ dependencies:
   cloud_firestore: ^3.4.6
   firebase_auth: ^3.8.0
   google_sign_in: ^5.4.1
+  shared_preferences: ^2.0.15
+  getwidget: ^3.0.1
+  conditional_questions: ^2.0.0
+  image_form_field: ^0.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  # image_picker: ^0.6.7+11
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

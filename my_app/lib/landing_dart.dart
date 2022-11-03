@@ -17,12 +17,12 @@ class _landingState extends State<landing> {
     return Scaffold(
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context,snapshot){
-            if(snapshot.hasData){
-              return home();
-            }else{
-              return fireauth();
-            }
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return MyApp();
+          } else {
+            return fireauth();
+          }
         },
       ),
     );
