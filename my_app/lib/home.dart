@@ -206,8 +206,11 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:my_app/log_out.dart';
 import 'myHome.dart';
 import 'newMemory.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'log_out.dart';
 //void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -235,17 +238,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static List<Widget> _widgetOptions = <Widget>[
+  static final List<Widget> _widgetOptions = <Widget>[
     MyHome(), //trips sharing contents
     NewMemory(),
     Text(
       'Index 2: My Trip',
       style: optionStyle,
     ),
-    Text(
-      'Index 3: Logout',
-      style: optionStyle,
-    ),
+    MyLogOut()
   ];
 
   void _onItemTapped(int index) {

@@ -24,12 +24,12 @@ class _fireauthstate extends State<fireauth> {
   TextEditingController _password = TextEditingController();
   var error = "";
 
-  @override
+  /*@override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     _email.dispose();
     super.dispose();
-  }
+  }*/
 
   @override
   void initState() {
@@ -161,6 +161,7 @@ class _fireauthstate extends State<fireauth> {
         email: _email.text,
         password: _password.text,
       );
+        saveEmail();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
