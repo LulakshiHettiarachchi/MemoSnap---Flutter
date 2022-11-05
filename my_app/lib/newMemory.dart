@@ -1,93 +1,133 @@
-import 'dart:html';
-
-import 'package:conditional_questions/conditional_questions.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-//import 'package:image_form_field/image_form_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-/*void main() {
-  runApp(newMemory());
-}*/
+import './auth.dart';
+/*class NewMemory extends StatelessWidget {
+  const NewMemory({super.key});
 
-class NewMemory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    const appTitle = 'Form Styling Demo';
     return MaterialApp(
-      //  title: 'Flutter Demo',
-      // theme: ThemeData(
-      //   primarySwatch: Colors.blue,
-      // ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, this.title}) : super(key: key);
-
-  final String? title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final _key = GlobalKey<QuestionFormState>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      //appBar: AppBar(
-      // title: Text(widget.title!),
-      //    ),
-      body: ConditionalQuestions(
-        key: _key,
-        children: questions(),
-        trailing: [
-          MaterialButton(
-            color: Color.fromARGB(255, 177, 230, 178),
-            splashColor: Colors.orangeAccent,
-            onPressed: () async {
-              if (_key.currentState!.validate()) {
-                print("validated!");
-              }
-            },
-            child: Text("Done"),
-          )
-        ],
-        // leading: [Text("TITLE")],
+      // title: appTitle,
+      home: Scaffold(
+        // appBar: AppBar(
+        //  title: const Text(appTitle),
+        //),
+        body: MyCustomForm(),
       ),
     );
   }
+}*/
+
+class NewMemory extends StatefulWidget {
+  const NewMemory({Key? key}) : super(key: key);
+
+  @override
+  State<NewMemory> createState() => _MyCustomForm();
 }
 
-List<Question> questions() {
-  return [
-    Question(
-      question: "Where did you go?",
-      //isMandatory: true,
-      validate: (field) {
-        if (field.isEmpty) return "Field cannot be empty";
-        return null;
-      },
-    ),
-    Question(
-      question: "Date",
-      //isMandatory: true,
-      validate: (field) {
-        if (field.isEmpty) return "Field cannot be empty";
-        return null;
-      },
-    ),
-    Question(
-      question: "Memories about the trip",
-      //isMandatory: true,
-      validate: (field) {
-        if (field.isEmpty) return "Field cannot be empty";
-        return null;
-      },
-    ),
+class _MyCustomForm extends State<NewMemory> {
+  //const MyCustomForm({super.key});
 
-    //image
-    // PickedFile _imageFile;
-  ];
+//store form data in text controllers
+  TextEditingController _place = TextEditingController();
+  TextEditingController _date = TextEditingController();
+  TextEditingController _content = TextEditingController();
+  var error = "";
+
+  @override
+  void initState() {
+    getEmail();
+    super.initState();
+  }
+
+//for get user email from shared preference
+  TextEditingController _email = TextEditingController();
+  getEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? saveE = prefs.getString('email');
+    // print(saveE);
+    if (saveE != null) {
+      // print("**********");
+      _email.text = saveE.toString();
+      //print(_email.text);
+      return _email.text;
+    }
+  }
+
+//widget for new memory form field
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+          child: TextFormField(
+            controller: _place,
+            onChanged: (value) {
+              error = "";
+            },
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: 'Where did you go',
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+          child: TextFormField(
+            controller: _date,
+            onChanged: (value) {
+              error = "";
+            },
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: 'Date',
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+          child: TextFormField(
+            controller: _content,
+            onChanged: (value) {
+              error = "";
+            },
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: 'Memories about the trip',
+            ),
+          ),
+        ),
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+            child: Center(
+              child: ElevatedButton(
+                  onPressed: add_memory,
+                  style: ButtonStyle(
+                      textStyle: MaterialStateProperty.all(
+                    const TextStyle(fontSize: 23),
+                  )),
+                  child: Text("Done")),
+            )),
+      ],
+    );
+  }
+
+  add_memory() async {
+    //final user_email = getEmail().toString();
+    print(_place.text);
+    print(_date.text);
+    print(_email.text);
+
+    FirebaseFirestore.instance.collection('new_memory').add({
+      'Place': _place.text,
+      'Date': _date.text,
+      'Content': _content.text,
+      'Email': _email.text
+    });
+  }
 }
