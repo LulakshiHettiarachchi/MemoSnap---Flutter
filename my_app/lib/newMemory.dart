@@ -58,7 +58,7 @@ class _MyCustomForm extends State<NewMemory> {
             },
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
-              labelText: 'Where did you go',
+              labelText: 'Where did you go/Title for your memory',
             ),
           ),
         ),
@@ -84,7 +84,7 @@ class _MyCustomForm extends State<NewMemory> {
             },
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
-              labelText: 'Memories about the trip',
+              labelText: 'Memories(you can share your experience and memories with others)',
             ),
           ),
         ),

@@ -50,10 +50,11 @@ Query<Map<String, dynamic>> getMainCollection() {
   //print("*****");
   //print(_email.text);
 
- final CollectionReference firestore =
+  final CollectionReference firestore =
       FirebaseFirestore.instance.collection('new_memory');
 
- Future<void> _delete(String productId) async {
+//delete a memory
+  Future<void> _delete(String productId) async {
     await firestore.doc(productId).delete();
 
     ScaffoldMessenger.of(this.context).showSnackBar(const SnackBar(
@@ -61,7 +62,7 @@ Query<Map<String, dynamic>> getMainCollection() {
   }
 
 //update my memory
-  Future<void> _update([DocumentSnapshot? documentSnapshot, context]) async {
+  Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
     TextEditingController _place = TextEditingController();
     TextEditingController _date = TextEditingController();
     TextEditingController _content = TextEditingController();
@@ -74,7 +75,7 @@ Query<Map<String, dynamic>> getMainCollection() {
 
     await showModalBottomSheet(
         isScrollControlled: true,
-        context: context,
+        context: this.context,
         builder: (BuildContext ctx) {
           return Padding(
             padding: EdgeInsets.only(
@@ -88,7 +89,8 @@ Query<Map<String, dynamic>> getMainCollection() {
               children: [
                 TextField(
                   controller: _place,
-                  decoration: const InputDecoration(labelText: 'Place'),
+                  decoration: const InputDecoration(
+                      labelText: 'Where did you go/Title for your memory'),
                 ),
                 TextField(
                   controller: _date,
@@ -96,7 +98,9 @@ Query<Map<String, dynamic>> getMainCollection() {
                 ),
                 TextField(
                   controller: _content,
-                  decoration: const InputDecoration(labelText: 'Memory'),
+                  decoration: const InputDecoration(
+                      labelText:
+                          'Memories(you can share your experience and memories with others)'),
                 ),
                 const SizedBox(
                   height: 20,
@@ -108,14 +112,14 @@ Query<Map<String, dynamic>> getMainCollection() {
                     final String date = _date.text;
                     final String content = _content.text;
 
-                    /*    await _mem.doc(documentSnapshot!.id)
-                        .update({"Place": place, "Date": date,"Content":content});
+                    await firestore.doc(documentSnapshot!.id).update(
+                        {"Place": place, "Date": date, "Content": content});
                     _place.text = '';
                     _date.text = '';
-                     _content.text = '';
-                    Navigator.of(context).pop();*/
+                    _content.text = '';
+                    Navigator.of(this.context).pop();
 
-                    await firestore
+                    /* await firestore
                         .where('Email', isEqualTo: "akila@gmail.com")
                         .get()
                         .then((snapshot) {
@@ -130,7 +134,7 @@ Query<Map<String, dynamic>> getMainCollection() {
                           'Content': content
                         });
                       });
-                    });
+                    });*/
                   },
                 )
               ],
@@ -223,9 +227,7 @@ Query<Map<String, dynamic>> getMainCollection() {
   }
 }
 
-_delete(String id) {}
 
-_create() {}
 
 //_update(DocumentSnapshot<Object?> documentSnapshot) {}
 
