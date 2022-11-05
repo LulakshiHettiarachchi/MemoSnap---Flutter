@@ -1,25 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/main.dart';
+//import 'package:my_app/globals.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'myHome.dart';
 import './auth.dart';
-/*class NewMemory extends StatelessWidget {
-  const NewMemory({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    const appTitle = 'Form Styling Demo';
-    return MaterialApp(
-      // title: appTitle,
-      home: Scaffold(
-        // appBar: AppBar(
-        //  title: const Text(appTitle),
-        //),
-        body: MyCustomForm(),
-      ),
-    );
-  }
-}*/
 
 class NewMemory extends StatefulWidget {
   const NewMemory({Key? key}) : super(key: key);
@@ -64,7 +50,7 @@ class _MyCustomForm extends State<NewMemory> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+          padding: const EdgeInsets.all(30),
           child: TextFormField(
             controller: _place,
             onChanged: (value) {
@@ -77,7 +63,7 @@ class _MyCustomForm extends State<NewMemory> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+          padding: const EdgeInsets.all(30),
           child: TextFormField(
             controller: _date,
             onChanged: (value) {
@@ -90,7 +76,7 @@ class _MyCustomForm extends State<NewMemory> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+          padding: const EdgeInsets.all(30),
           child: TextFormField(
             controller: _content,
             onChanged: (value) {
@@ -107,16 +93,20 @@ class _MyCustomForm extends State<NewMemory> {
             child: Center(
               child: ElevatedButton(
                   onPressed: add_memory,
-                  style: ButtonStyle(
-                      textStyle: MaterialStateProperty.all(
-                    const TextStyle(fontSize: 23),
-                  )),
-                  child: Text("Done")),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontStyle: FontStyle.normal),
+                  ),
+                  child: Text("Add new Memory")),
             )),
       ],
     );
   }
 
+//insert new data to database
   add_memory() async {
     //final user_email = getEmail().toString();
     print(_place.text);
@@ -129,5 +119,11 @@ class _MyCustomForm extends State<NewMemory> {
       'Content': _content.text,
       'Email': _email.text
     });
+
+    //navigate to home page (all memories)
+    Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>  MyApp()),
+            );
   }
 }

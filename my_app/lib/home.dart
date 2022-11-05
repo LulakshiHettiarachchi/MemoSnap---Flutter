@@ -211,12 +211,14 @@ import 'myHome.dart';
 import 'newMemory.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'log_out.dart';
+import 'my_memory.dart';
+//import 'globals.dart';
 //void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static const String _title = 'Tour2Do';
+  static const String _title = 'Memories';
 
   @override
   Widget build(BuildContext context) {
@@ -239,12 +241,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
-    MyHome(), //trips sharing contents
+    MyMem(), //trips sharing contents
     NewMemory(),
-    Text(
-      'Index 2: My Trip',
-      style: optionStyle,
-    ),
+    MyMemOnly(),
     MyLogOut()
   ];
 
@@ -258,7 +257,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
+        title: const Text('Memories'),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -267,18 +266,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'My memories',
-            backgroundColor: Colors.red,
+            label: 'Memories',
+            backgroundColor: Color.fromARGB(255, 245, 22, 211),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.create),
-            label: 'Plan',
+            label: 'Add new Memory',
             backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today),
-            label: 'My Trip',
-            backgroundColor: Colors.purple,
+            label: 'My Memories',
+            backgroundColor: Color.fromARGB(255, 208, 236, 83),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
