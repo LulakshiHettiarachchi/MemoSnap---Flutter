@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: [
@@ -54,22 +55,23 @@ class _fireauthstate extends State<fireauth> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text("TourG"),
+            title: Text("Memory"),
             centerTitle: true,
-            backgroundColor: Color.fromARGB(255, 11, 224, 135)),
+           backgroundColor: Color.fromARGB(255, 103, 240, 172)
+           ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(50),
+          padding: EdgeInsets.all(20),
           child: Center(
             child: Column(children: [
               Container(
                   width: 300,
-                  color: Color.fromARGB(255, 187, 234, 185),
+                 color: Color.fromARGB(255, 255, 255, 255),
                   child: Column(
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
                         child: Image.network(
-                            "https://i.postimg.cc/Z5GxzdcC/i3.jpg"),
+                            "https://i.postimg.cc/9FnJwWRG/i7.jpg"),
                       ),
                       Padding(
                           padding: EdgeInsets.all(15),
@@ -134,9 +136,25 @@ class _fireauthstate extends State<fireauth> {
                                 //     onPressed: saveEmail,
                                 //     child: Text("Save email")),
                                 ElevatedButton(
-                                    onPressed: signin, child: Text("Sign In")),
+                                    onPressed: signin,
+                                    style: ElevatedButton.styleFrom(
+                                          primary: Colors.green,
+                                          textStyle: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontStyle: FontStyle.normal),
+                                 ),
+                                   child: Text("Sign In")),
                                 ElevatedButton(
-                                    onPressed: signUp, child: Text("Sign up")),
+                                    onPressed: signUp,
+                                    style: ElevatedButton.styleFrom(
+                                    primary: Colors.green,
+                                    textStyle: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontStyle: FontStyle.normal),
+                  ),
+                   child: Text("Sign up")),
                               ]),
                         ),
                       ),
@@ -144,7 +162,21 @@ class _fireauthstate extends State<fireauth> {
                         padding: EdgeInsets.all(15),
                         child: ElevatedButton(
                             onPressed: signInWithGoogle,
-                            child: Text("Sign in with google")),
+                            style: ElevatedButton.styleFrom(
+                            primary: Colors.green,
+                            textStyle: const TextStyle(
+                            color: Colors.white,
+                           fontSize: 20,
+                           fontStyle: FontStyle.normal),
+                  ),         child:Row(
+                                children:[
+                                
+                                   Text("Sign in with google"),
+                                          ],
+                                       ),
+                             //Icon.
+                           
+                            ),
                       )
                     ],
                   )),
