@@ -42,10 +42,11 @@ class _MyCustomForm extends State<NewMemory> {
       return _email.text;
     }
   }
-
 //widget for new memory form field
   @override
   Widget build(BuildContext context) {
+   // print("+++++++++++++++++++++++");
+   //print(_email.text);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -100,7 +101,8 @@ class _MyCustomForm extends State<NewMemory> {
                         fontSize: 20,
                         fontStyle: FontStyle.normal),
                   ),
-                  child: Text("Add new Memory")),
+                  child: Text("Add new Memory")
+                  ),
             )),
       ],
     );

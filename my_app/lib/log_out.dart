@@ -32,29 +32,28 @@ class _LogOutState extends State<LogOut> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ElevatedButton(
-        //	color: Colors.green,
-        onPressed: () async {
-          await FirebaseAuth.instance.signOut();
-        },
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Log Out',
-              style: TextStyle(
-                color: Color.fromARGB(255, 247, 248, 246),
-              ),
-            ), // <-- Text
-
-            Icon(
-              // <-- Icon
-              Icons.logout,
-              size: 14.0,
-            ),
-          ],
+      
+        child: Column(
+          
+      children: [
+        
+        ClipRRect(
+          borderRadius: BorderRadius.circular(5.0),
+          child: Image.network("https://i.postimg.cc/yxNnfz1K/i5.png"),
         ),
-      ),
-    );
+        ElevatedButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+            },
+            style: ElevatedButton.styleFrom(
+              primary: Color.fromARGB(255, 213, 138, 183),
+              textStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontStyle: FontStyle.normal),
+            ),
+            child: Text("Log Out"))
+      ],
+    ));
   }
 }

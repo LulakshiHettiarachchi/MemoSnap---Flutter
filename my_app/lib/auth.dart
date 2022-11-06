@@ -69,7 +69,7 @@ class _fireauthstate extends State<fireauth> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
                         child: Image.network(
-                            "https://i.postimg.cc/gkWx7Gyd/woman-girl-travel-clipart-xl.png"),
+                            "https://i.postimg.cc/Z5GxzdcC/i3.jpg"),
                       ),
                       Padding(
                           padding: EdgeInsets.all(15),

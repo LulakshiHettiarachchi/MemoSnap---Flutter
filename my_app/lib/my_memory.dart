@@ -22,6 +22,8 @@ class _MyMemState extends State<MyMemOnly> {
     super.initState();
   }
 
+  //_display();
+
 //for get user email from shared preference
   TextEditingController _email = TextEditingController();
   getEmail() async {
@@ -35,20 +37,6 @@ class _MyMemState extends State<MyMemOnly> {
       return _email.text;
     }
   }
-
-  /*final Query<Map<String, dynamic>> _mem = FirebaseFirestore.instance
-        .collection('new_memory')
-        .where('Email', isEqualTo:"akila@gmail.com");
-
-Query<Map<String, dynamic>> getMainCollection() {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    return firestore.collection('new_memory').where('Email', isEqualTo:"akila@gmail.com");
-  }*/
-
-//DocumentReference<T> doc([String? path]);
-
-  //print("*****");
-  //print(_email.text);
 
   final CollectionReference firestore =
       FirebaseFirestore.instance.collection('new_memory');
@@ -118,23 +106,6 @@ Query<Map<String, dynamic>> getMainCollection() {
                     _date.text = '';
                     _content.text = '';
                     Navigator.of(this.context).pop();
-
-                    /* await firestore
-                        .where('Email', isEqualTo: "akila@gmail.com")
-                        .get()
-                        .then((snapshot) {
-                      snapshot.docs.forEach((documentSnapshot) async {
-                        //There must be a field in document snapshot that represents this doc Id
-                        String thisDocId = documentSnapshot['Document ID'];
-                        await firestore
-                            .doc(thisDocId)
-                            .update({
-                          'Place': place,
-                          'Date': date,
-                          'Content': content
-                        });
-                      });
-                    });*/
                   },
                 )
               ],
@@ -143,92 +114,130 @@ Query<Map<String, dynamic>> getMainCollection() {
         });
   }
 
-//display my memory
-  @override
-  Widget build(BuildContext context) {
+  Future<void> _display() async {
     final Query<Map<String, dynamic>> _mem = FirebaseFirestore.instance
         .collection('new_memory')
-        .where('Email', isEqualTo: "akila@gmail.com");
+        .where('Email', isEqualTo: _email.text);
 
-    return Scaffold(
-      body: StreamBuilder(
-        stream: _mem.snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-          if (streamSnapshot.hasData) {
-            return ListView.builder(
-              itemCount: streamSnapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                final DocumentSnapshot documentSnapshot =
-                    streamSnapshot.data!.docs[index];
-                return Card(
-                  margin: const EdgeInsets.all(20),
-                  child: Column(
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                          child: Text(
-                            documentSnapshot['Place'],
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 122, 118, 118)
-                                    .withOpacity(1)),
-                          ),
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: this.context,
+        builder: (BuildContext ctx) {
+          return Scaffold(
+            appBar: AppBar(
+                title: Text("My Memories"),
+                centerTitle: true,
+                backgroundColor: Color.fromARGB(255, 11, 224, 135)),
+            body: StreamBuilder(
+              stream: _mem.snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                if (streamSnapshot.hasData) {
+                  return ListView.builder(
+                    itemCount: streamSnapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      final DocumentSnapshot documentSnapshot =
+                          streamSnapshot.data!.docs[index];
+                      return Card(
+                        margin: const EdgeInsets.all(20),
+                        child: Column(
+                          children: <Widget>[
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                child: Text(
+                                  documentSnapshot['Place'],
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 122, 118, 118)
+                                          .withOpacity(1)),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                child: Text(
+                                  documentSnapshot['Date'],
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 122, 118, 118)
+                                          .withOpacity(0.9)),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                child: Text(
+                                  documentSnapshot['Content'],
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 137, 134, 134)
+                                          .withOpacity(0.9)),
+                                ),
+                              ),
+                            ),
+                            Row(children: <Widget>[
+                              IconButton(
+                                  icon: const Icon(Icons.edit),
+                                  color: Color.fromARGB(255, 15, 152, 127),
+                                  onPressed: () => _update(documentSnapshot)),
+                              IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  color: Color.fromARGB(255, 240, 82, 71),
+                                  onPressed: () =>
+                                      _delete(documentSnapshot.id)),
+                            ])
+                          ],
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                          child: Text(
-                            documentSnapshot['Date'],
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 122, 118, 118)
-                                    .withOpacity(0.9)),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                          child: Text(
-                            documentSnapshot['Content'],
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 137, 134, 134)
-                                    .withOpacity(0.9)),
-                          ),
-                        ),
-                      ),
-                      Row(children: <Widget>[
-                        IconButton(
-                            icon: const Icon(Icons.edit),
-                            color: Color.fromARGB(255, 15, 152, 127),
-                            onPressed: () => _update(documentSnapshot)),
-                        IconButton(
-                            icon: const Icon(Icons.delete),
-                            color: Color.fromARGB(255, 240, 82, 71),
-                            onPressed: () => _delete(documentSnapshot.id)),
-                      ])
-                    ],
-                  ),
+                      );
+                    },
+                  );
+                }
+
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               },
-            );
-          }
-
-          return const Center(
-            child: CircularProgressIndicator(),
+            ),
           );
-        },
-      ),
+        });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+
+    child: Column(children: [
+      ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.network("https://i.postimg.cc/7Z8kCBP9/i2.jpg"),
+              ),
+     ElevatedButton(onPressed: _display,
+               style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontStyle: FontStyle.normal),
+                  ),
+                child: Text("View My Memories"))
+
+     ],)
+      
+
+    
+        
+        
+      
     );
+
+    //throw UnimplementedError();
   }
 }
 
 
 
 //_update(DocumentSnapshot<Object?> documentSnapshot) {}
-
 
