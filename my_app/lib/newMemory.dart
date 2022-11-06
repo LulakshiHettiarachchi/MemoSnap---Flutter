@@ -45,8 +45,7 @@ class _MyCustomForm extends State<NewMemory> {
 //widget for new memory form field
   @override
   Widget build(BuildContext context) {
-   // print("+++++++++++++++++++++++");
-   //print(_email.text);
+   
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -110,11 +109,12 @@ class _MyCustomForm extends State<NewMemory> {
 
 //insert new data to database
   add_memory() async {
-    //final user_email = getEmail().toString();
+   
     print(_place.text);
     print(_date.text);
     print(_email.text);
 
+//create firebase instance from my new_memory collection
     FirebaseFirestore.instance.collection('new_memory').add({
       'Place': _place.text,
       'Date': _date.text,

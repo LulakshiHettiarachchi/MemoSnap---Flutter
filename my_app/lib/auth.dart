@@ -54,27 +54,41 @@ class _fireauthstate extends State<fireauth> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      
+        /*appBar: AppBar(
             title: Text("Memory"),
             centerTitle: true,
-           backgroundColor: Color.fromARGB(255, 103, 240, 172)
-           ),
+           backgroundColor: Color.fromARGB(255, 103, 240, 172),
+           
+           ),*/
+           
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(20),
-          child: Center(
+          child:Container(
+            padding: EdgeInsets.all(85),
+             decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Colors.blue,
+                Colors.red,
+              ],
+            )
+          ),
+         child: Center(
             child: Column(children: [
               Container(
                   width: 300,
-                 color: Color.fromARGB(255, 255, 255, 255),
+                // color: Color.fromARGB(255, 255, 255, 255),
                   child: Column(
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
                         child: Image.network(
-                            "https://i.postimg.cc/9FnJwWRG/i7.jpg"),
+                            "https://i.postimg.cc/GtCBgXZR/i10-removebg-preview.png"),
                       ),
                       Padding(
-                          padding: EdgeInsets.all(15),
+                          padding: EdgeInsets.all(10),
                           //apply padding to all four sides
 
                           child: TextFormField(
@@ -98,7 +112,7 @@ class _fireauthstate extends State<fireauth> {
                           )),
                       Padding(
                           padding: EdgeInsets.all(
-                              15), //apply padding to all four sides
+                              10), //apply padding to all four sides
                           child: TextFormField(
                             controller: _password,
                             onChanged: (value) {
@@ -120,13 +134,13 @@ class _fireauthstate extends State<fireauth> {
                             }),
                           )),
                       Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: EdgeInsets.all(10),
                         child: Text(error,
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 233, 27, 27))),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: EdgeInsets.all(10),
                         child: Container(
                           alignment: FractionalOffset.center,
                           child: Row(
@@ -153,38 +167,41 @@ class _fireauthstate extends State<fireauth> {
                                     color: Colors.white,
                                     fontSize: 20,
                                     fontStyle: FontStyle.normal),
-                  ),
-                   child: Text("Sign up")),
-                              ]),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(15),
-                        child: ElevatedButton(
-                            onPressed: signInWithGoogle,
-                            style: ElevatedButton.styleFrom(
-                            primary: Colors.green,
-                            textStyle: const TextStyle(
-                            color: Colors.white,
-                           fontSize: 20,
-                           fontStyle: FontStyle.normal),
-                  ),         child:Row(
-                                children:[
-                                
-                                   Text("Sign in with google"),
-                                          ],
-                                       ),
-                             //Icon.
-                           
-                            ),
-                      )
-                    ],
-                  )),
+                                  ),
+                                  child: Text("Sign up")),
+                                              ]),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: ElevatedButton(
+                                          onPressed: signInWithGoogle,
+                                          style: ElevatedButton.styleFrom(
+                                          primary: Colors.green,
+                                          textStyle: const TextStyle(
+                                          color: Colors.white,
+                                        fontSize: 20,
+                                        fontStyle: FontStyle.normal),
+                                          ),         
+
+                                      child: Text("Sign in with google"),
+                                                        
+                                          ), 
+                                        ),
+                                  ],
+                                )
+                              ),
             ]),
           ),
+
+          )
+         // padding: EdgeInsets.all(20),
+          
+          
         ));
   }
 
+//sign up
   signUp() async {
     print(_email.text);
     try {
@@ -205,6 +222,7 @@ class _fireauthstate extends State<fireauth> {
     }
   }
 
+//sign in
   signin() async {
     print(_email.text);
     try {
@@ -223,6 +241,7 @@ class _fireauthstate extends State<fireauth> {
     }
   }
 
+//sign in with google
   Future<UserCredential> signInWithGoogle() async {
     // Create a new provider
     GoogleAuthProvider googleProvider = GoogleAuthProvider();

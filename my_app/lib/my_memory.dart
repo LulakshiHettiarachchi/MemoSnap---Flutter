@@ -15,25 +15,25 @@ class MyMemOnly extends StatefulWidget {
 }
 
 class _MyMemState extends State<MyMemOnly> {
-  // _MyMemState(this._mem);
+ 
+
   @override
   void initState() {
     getEmail();
     super.initState();
   }
 
-  //_display();
 
 //for get user email from shared preference
   TextEditingController _email = TextEditingController();
   getEmail() async {
     final prefs = await SharedPreferences.getInstance();
     final String? saveE = prefs.getString('email');
-    // print(saveE);
+   
     if (saveE != null) {
-      // print("**********");
+      
       _email.text = saveE.toString();
-      //print(_email.text);
+      
       return _email.text;
     }
   }
@@ -114,6 +114,7 @@ class _MyMemState extends State<MyMemOnly> {
         });
   }
 
+//display my memories
   Future<void> _display() async {
     final Query<Map<String, dynamic>> _mem = FirebaseFirestore.instance
         .collection('new_memory')

@@ -25,8 +25,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: SafeArea(
-      child: landing(),
-    ));
+      debugShowCheckedModeBanner: false,
+      home: SafeArea(
+        child: landing(),
+      ),
+    );
   }
 }

@@ -81,18 +81,8 @@ class _MyMemState extends State<MyMem> {
           );
         },
       ),
-// Add new product
-      /* floatingActionButton: FloatingActionButton(
-          onPressed: () => _create(),
-          child: const Icon(Icons.add),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat*/
+
     );
   }
 }
 
-_delete(String id) {}
-
-_create() {}
-
-_update(DocumentSnapshot<Object?> documentSnapshot) {}

@@ -6,17 +6,13 @@ import 'package:flutter/material.dart';
 class MyLogOut extends StatelessWidget {
   const MyLogOut({Key? key}) : super(key: key);
 
-//static const String _title = 'GeeskforGeeks';
+
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //title: _title,
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        //appBar: AppBar(
-        //	title: const Text(_title),
-        //backgroundColor: Colors.green,
-        //	),
         body: LogOut(),
       ),
     );
@@ -37,10 +33,14 @@ class _LogOutState extends State<LogOut> {
           
       children: [
         
-        ClipRRect(
-          borderRadius: BorderRadius.circular(5.0),
-          child: Image.network("https://i.postimg.cc/yxNnfz1K/i5.png"),
-        ),
+        Container(
+              child: Image(
+               width: 300,
+              image: NetworkImage("https://i.postimg.cc/yxNnfz1K/i5.png"),
+              ),
+            ),
+         
+        
         ElevatedButton(
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
