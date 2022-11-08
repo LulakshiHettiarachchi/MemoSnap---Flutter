@@ -1,25 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/main.dart';
+//import 'package:my_app/globals.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'myHome.dart';
 import './auth.dart';
-/*class NewMemory extends StatelessWidget {
-  const NewMemory({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    const appTitle = 'Form Styling Demo';
-    return MaterialApp(
-      // title: appTitle,
-      home: Scaffold(
-        // appBar: AppBar(
-        //  title: const Text(appTitle),
-        //),
-        body: MyCustomForm(),
-      ),
-    );
-  }
-}*/
 
 class NewMemory extends StatefulWidget {
   const NewMemory({Key? key}) : super(key: key);
@@ -56,15 +42,15 @@ class _MyCustomForm extends State<NewMemory> {
       return _email.text;
     }
   }
-
 //widget for new memory form field
   @override
   Widget build(BuildContext context) {
+   
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+          padding: const EdgeInsets.all(30),
           child: TextFormField(
             controller: _place,
             onChanged: (value) {
@@ -72,12 +58,12 @@ class _MyCustomForm extends State<NewMemory> {
             },
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
-              labelText: 'Where did you go',
+              labelText: 'Where did you go/Title for your memory',
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+          padding: const EdgeInsets.all(30),
           child: TextFormField(
             controller: _date,
             onChanged: (value) {
@@ -90,7 +76,7 @@ class _MyCustomForm extends State<NewMemory> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+          padding: const EdgeInsets.all(30),
           child: TextFormField(
             controller: _content,
             onChanged: (value) {
@@ -98,7 +84,7 @@ class _MyCustomForm extends State<NewMemory> {
             },
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
-              labelText: 'Memories about the trip',
+              labelText: 'Memories(you can share your experience and memories with others)',
             ),
           ),
         ),
@@ -107,27 +93,39 @@ class _MyCustomForm extends State<NewMemory> {
             child: Center(
               child: ElevatedButton(
                   onPressed: add_memory,
-                  style: ButtonStyle(
-                      textStyle: MaterialStateProperty.all(
-                    const TextStyle(fontSize: 23),
-                  )),
-                  child: Text("Done")),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontStyle: FontStyle.normal),
+                  ),
+                  child: Text("Add new Memory")
+                  ),
             )),
       ],
     );
   }
 
+//insert new data to database
   add_memory() async {
-    //final user_email = getEmail().toString();
+   
     print(_place.text);
     print(_date.text);
     print(_email.text);
 
+//create firebase instance from my new_memory collection
     FirebaseFirestore.instance.collection('new_memory').add({
       'Place': _place.text,
       'Date': _date.text,
       'Content': _content.text,
       'Email': _email.text
     });
+
+    //navigate to home page (all memories)
+    Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>  MyApp()),
+            );
   }
 }

@@ -6,17 +6,13 @@ import 'package:flutter/material.dart';
 class MyLogOut extends StatelessWidget {
   const MyLogOut({Key? key}) : super(key: key);
 
-//static const String _title = 'GeeskforGeeks';
+
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //title: _title,
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        //appBar: AppBar(
-        //	title: const Text(_title),
-        //backgroundColor: Colors.green,
-        //	),
         body: LogOut(),
       ),
     );
@@ -32,29 +28,32 @@ class _LogOutState extends State<LogOut> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ElevatedButton(
-        //	color: Colors.green,
-        onPressed: () async {
-          await FirebaseAuth.instance.signOut();
-        },
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Log Out',
-              style: TextStyle(
-                color: Color.fromARGB(255, 247, 248, 246),
+      
+        child: Column(
+          
+      children: [
+        
+        Container(
+              child: Image(
+               width: 300,
+              image: NetworkImage("https://i.postimg.cc/yxNnfz1K/i5.png"),
               ),
-            ), // <-- Text
-
-            Icon(
-              // <-- Icon
-              Icons.logout,
-              size: 14.0,
             ),
-          ],
-        ),
-      ),
-    );
+         
+        
+        ElevatedButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+            },
+            style: ElevatedButton.styleFrom(
+              primary: Color.fromARGB(255, 213, 138, 183),
+              textStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontStyle: FontStyle.normal),
+            ),
+            child: Text("Log Out"))
+      ],
+    ));
   }
 }

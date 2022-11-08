@@ -42,6 +42,7 @@ dependencies:
   getwidget: ^3.0.1
   conditional_questions: ^2.0.0
   image_form_field: ^0.0.2
+  flutter_signin_button: ^2.0.0
 
 dev_dependencies:
   flutter_test:
